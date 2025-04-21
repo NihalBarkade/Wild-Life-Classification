@@ -41,19 +41,21 @@ This deep learning model uses **MobileNetV2 + Transfer Learning** to predict the
 Upload an image of an animal and the model will tell you what it is — along with how confident it is in the prediction. 🔍
 """)
 
-uploaded_file = st.file_uploader("Upload an animal image", type=["jpg", "jpeg", "png"])
+uploaded_file = st.file_uploader("Upload an animal image", type=["jpg", "jpeg", "png"], accept_multiple_files=True)
 
-if uploaded_file is not None:
-    st.image(uploaded_file, caption="Uploaded Image", use_container_width=True)
-    
-    with st.spinner("Predicting..."):
-        img_array = preprocess_image(uploaded_file)
-        prediction = model.predict(img_array)
-        predicted_class = class_names[np.argmax(prediction)]
-        confidence = round(100 * np.max(prediction), 2)
+if uploaded_files:
+    for uploaded_file in uploaded_files:
+        st.image(uploaded_file, caption="Uploaded Image", use_container_width=True)
 
-    st.success(f"🧠 Prediction: **{predicted_class}**")
-    st.info(f"Confidence: **{confidence}%**")
+        with st.spinner(f"Predicting for {uploaded_file.name}..."):
+            img_array = preprocess_image(uploaded_file)
+            prediction = model.predict(img_array)
+            predicted_class = class_names[np.argmax(prediction)]
+            confidence = round(100 * np.max(prediction), 2)
+
+        st.success(f"🧠 Prediction for **{uploaded_file.name}**: **{predicted_class}**")
+        st.info(f"Confidence: **{confidence}%**")
+        st.markdown("---")
 
 # Footer Section
 st.markdown("---")
