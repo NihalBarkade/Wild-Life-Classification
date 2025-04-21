@@ -41,7 +41,7 @@ This deep learning model uses **MobileNetV2 + Transfer Learning** to predict the
 Upload an image of an animal and the model will tell you what it is — along with how confident it is in the prediction. 🔍
 """)
 
-uploaded_file = st.file_uploader("Upload an animal image", type=["jpg", "jpeg", "png"], accept_multiple_files=True)
+uploaded_files = st.file_uploader("Upload an animal image", type=["jpg", "jpeg", "png"], accept_multiple_files=True)
 
 if uploaded_files:
     for uploaded_file in uploaded_files:
